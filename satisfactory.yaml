@@ -1,0 +1,93 @@
+iron-ore:
+  recipes:
+    - name: "Iron Ore"
+      builder: "Miner Mk. 1 (Normal)"
+      duration: 1
+      quantity: 1
+      reagents: []
+
+water:
+  recipes:
+    - name: "Water"
+      builder: "Water Extractor"
+      duration: 1
+      quantity: 2
+      reagents: []
+
+copper-ore:
+  recipes:
+    - name: "Copper Ore"
+      builder: "Miner Mk. 1 (Normal)"
+      duration: 1
+      quantity: 1
+      reagents: []
+
+iron-ingot:
+  recipes:
+    - name: "Iron Ingot"
+      builder: "Smelter"
+      duration: 2.0
+      quantity: 1
+      reagents:
+        - widget: iron-ore
+          quantity: 1
+    - name: "Pure Iron Ingot"
+      builder: "Refinery"
+      duration: 12.0
+      quantity: 13
+      reagents:
+        - widget: iron-ore
+          quantity: 7
+        - widget: water
+          quantity: 4
+    - name: "Iron Alloy Ingot"
+      builder: "Foundry"
+      duration: 6.0
+      quantity: 5
+      reagents:
+        - widget: iron-ore
+          quantity: 2
+        - widget: copper-ore
+          quantity: 2
+
+iron-rod:
+  recipes:
+    - name: "Iron Rod"
+      builder: "Constructor"
+      duration: 4.0
+      quantity: 1
+      reagents:
+        - widget: iron-ingot
+          quantity: 1
+
+screw:
+  recipes:
+    - name: "Screw"
+      builder: "Constructor"
+      duration: 6.0
+      quantity: 4
+      reagents:
+        - widget: iron-rod
+          quantity: 1
+
+iron-plate:
+  recipes:
+    - name: "Iron Plate"
+      builder: "Constructor"
+      duration: 6.0
+      quantity: 2
+      reagents:
+        - widget: iron-ingot
+          quantity: 3
+
+reinforced-iron-plate:
+  recipes:
+    - name: "Reinforced Iron Plate"
+      builder: "Assembler"
+      duration: 12.0
+      quantity: 1
+      reagents:
+        - widget: iron-plate
+          quantity: 6
+        - widget: screw
+          quantity: 12
