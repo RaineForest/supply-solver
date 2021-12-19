@@ -22,6 +22,14 @@ copper-ore:
       quantity: 1
       reagents: []
 
+coal:
+  recipes:
+    - name: "Coal"
+      builder: "Miner Mk. 1 (Normal)"
+      duration: 1
+      quantity: 1
+      reagents: []
+
 iron-ingot:
   recipes:
     - name: "Iron Ingot"
@@ -91,3 +99,147 @@ reinforced-iron-plate:
           quantity: 6
         - widget: screw
           quantity: 12
+
+copper-ingot:
+  recipes:
+    - name: "Copper Ingot"
+      builder: "Smelter"
+      duration: 2.0
+      quantity: 1
+      reagents:
+        - widget: copper-ore
+          quantity: 1
+
+wire:
+  recipes:
+    - name: "Wire"
+      builder: "Constructor"
+      duration: 4.0
+      quantity: 2
+      reagents:
+        - widget: copper-ingot
+          quantity: 1
+
+cable:
+  recipes:
+    - name: "Cable"
+      builder: "Constructor"
+      duration: 2.0
+      quantity: 1
+      reagents:
+        - widget: wire
+          quantity: 2
+
+copper-sheet:
+  recipes:
+    - name: "Copper Sheet"
+      builder: "Constructor"
+      duration: 6.0
+      quantity: 1
+      reagents:
+        - widget: copper-ingot
+          quantity: 2
+
+rotor:
+  recipes:
+    - name: "Rotor"
+      builder: "Assembler"
+      duration: 15.0
+      quantity: 1
+      reagents:
+        - widget: iron-rod
+          quantity: 5
+        - widget: screw
+          quantity: 25
+
+smart-plating:
+  recipes:
+    - name: "Smart Plating"
+      builder: "Assembler"
+      duration: 30.0
+      quantity: 1
+      reagents:
+        - widget: reinforced-iron-plate
+          quantity: 1
+        - widget: rotor
+          quantity: 1
+
+steel-ingot:
+  recipes:
+    - name: "Steel Ingot"
+      builder: "Foundry"
+      duration: 4.0
+      quantity: 3
+      reagents:
+        - widget: iron-ore
+          quantity: 3
+        - widget: coal
+          quantity: 3
+
+steel-beam:
+  recipes:
+    - name: "Steel Beam"
+      builder: "Constructor"
+      duration: 4.0
+      quantity: 1
+      reagents:
+        - widget: steel-ingot
+          quantity: 4
+
+steel-pipe:
+  recipes:
+    - name: "Steel Pipe"
+      builder:  "Constructor"
+      duration: 6.0
+      quantity: 2
+      reagents:
+        - widget: steel-ingot
+          quantity: 3
+
+modular-frame:
+  recipes:
+    - name: "Modular Frame"
+      builder: "Assembler"
+      duration: 60.0
+      quantity: 2
+      reagents:
+        - widget: reinforced-iron-plate
+          quantity: 3
+        - widget: iron-rod
+          quantity: 12
+
+versatile-framework:
+  recipes:
+    - name: "Versatile Framework"
+      builder: "Assembler"
+      duration: 24.0
+      quantity: 2
+      reagents:
+        - widget: modular-frame
+          quantity: 1
+        - widget: steel-beam
+          quantity: 12
+
+stator:
+  recipes:
+    - name: "Stator"
+      builder: "Assembler"
+      duration: 12.0
+      quantity: 1
+      reagents:
+        - widget: steel-pipe
+          quantity: 3
+        - widget: wire
+          quantity: 8
+
+automated-wiring:
+  recipes:
+    - name: "Automated Wiring"
+      builder: "Assembler"
+      duration: 24.0
+      quantity: 1
+      reagents:
+        - widget: stator
+          quantity: 1
+        - widget: cable
+          quantity: 20
