@@ -4,6 +4,7 @@ use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
+use structopt::StructOpt;
 
 mod tree;
 use crate::tree::NTree;
@@ -95,10 +96,20 @@ fn print_tree(tree: &NTree<(&Recipe, u64)>) {
     print_tree_helper(last, "".to_owned(), true);
 }
 
+#[derive(StructOpt)]
+struct Cli {
+    #[structopt(parse(from_os_str))]
+    game_def: std::path::PathBuf,
+
+    widget: String,
+    rate: f64
+}
+
 fn main() {
-    let file = File::open("satisfactory.yaml").unwrap();
+    let args = Cli::from_args();
+    let file = File::open(args.game_def).unwrap();
     let reader = BufReader::new(file);
     let map: BTreeMap<String, Widget> = serde_yaml::from_reader(reader).unwrap();
 
-    print_tree(&dep_tree(&map, &"reinforced-iron-plate".to_owned(), Rational64::new(5, 60)));
+    print_tree(&dep_tree(&map, &args.widget, Rational64::approximate_float(args.rate).unwrap()));
 }
