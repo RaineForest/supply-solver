@@ -1,9 +1,9 @@
 use num::Rational64;
 use serde::{Deserialize, Deserializer};
 use std::cmp::Ordering;
-use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
+use std::path::PathBuf;
 use structopt::StructOpt;
 
 mod tree;
@@ -25,7 +25,7 @@ struct Recipe {
     // in seconds
     #[serde(deserialize_with="deserialize_decimal")]
     duration: Rational64,
-    quantity: u64,
+    products: Vec<Reagent>,
     reagents: Vec<Reagent>
 }
 
@@ -35,26 +35,36 @@ fn deserialize_decimal<'de, D>(deserializer: D) -> Result<Rational64, D::Error> 
 
 impl Recipe {
     // units/second
-    pub fn rate(&self) -> Rational64 {
-        Rational64::from_integer(self.quantity as i64) / self.duration
+    pub fn rate(&self, widget: &String) -> Rational64 {
+        let reagent = self.products.iter().filter(| r | widget == &r.widget).next().unwrap();
+        Rational64::from_integer(reagent.quantity as i64) / self.duration
     }
 }
 
 #[derive(Debug, Deserialize)]
-struct Widget {
+struct Cookbook {
+    widgets: Vec<String>,
     recipes: Vec<Recipe>
+}
+
+impl Cookbook {
+    pub fn parse(file_path: &PathBuf) -> Self {
+        let file = File::open(file_path).unwrap();
+        let reader = BufReader::new(file);
+        serde_yaml::from_reader(reader).unwrap()
+    }
 }
 
 fn least_waste_heuristic<'a>(graph: &'a Hypergraph<String, Recipe>, widget: &String, rate: Rational64) -> Option<(&'a Recipe, u64)> {
     let best_recipe = graph.neighbor_of(widget).unwrap().iter().map(| e | graph.get_weight(e).unwrap()).min_by(
         |recipe, min_rate| -> Ordering {
-            let waste = (rate / recipe.rate()).fract();
-            let min_waste = (rate / min_rate.rate()).fract();
+            let waste = (rate / recipe.rate(widget)).fract();
+            let min_waste = (rate / min_rate.rate(widget)).fract();
             waste.cmp(&min_waste)
         }); 
     match best_recipe {
         Some(r) => {
-            let frac = (rate / r.rate()).ceil();
+            let frac = (rate / r.rate(widget)).ceil();
             Some((r, (frac.numer() / frac.denom()) as u64))
         },
         None => None
@@ -79,7 +89,7 @@ fn print_tree_helper(tree: &NTree<(&Recipe, u64)>, prefix: String, is_last: bool
         Some(x) => x,
         None => return
     };
-    let spacer = if is_last { "    " } else { "|   " };
+    let spacer = if is_last { "    " } else { "│   " };
     for child in rest.iter() {
         print_tree_helper(child, format!("{prefix}{spacer}", prefix=prefix, spacer=spacer), false);
     }
@@ -110,18 +120,15 @@ struct Cli {
 
 fn main() {
     let args = Cli::from_args();
-    let file = File::open(args.game_def).unwrap();
-    let reader = BufReader::new(file);
-    let map: BTreeMap<String, Widget> = serde_yaml::from_reader(reader).unwrap();
+    let cookbook = Cookbook::parse(&args.game_def);
     let mut graph = Hypergraph::<String, Recipe>::new();
-    for widget in map.keys() {
+    for widget in cookbook.widgets {
         graph.insert_node(widget.clone());
     }
-    for (widget, obj) in map.iter() {
-        for recipe in &obj.recipes {
-            let sources: Vec<String> = recipe.reagents.iter().map(| r | r.widget.clone()).collect();
-            graph.insert_edge(&sources, &vec![widget.clone()], recipe.clone());
-        }
+    for recipe in cookbook.recipes {
+        let sources: Vec<String> = recipe.reagents.iter().map(| r | r.widget.clone()).collect();
+        let destinations: Vec<String> = recipe.products.iter().map(| r | r.widget.clone()).collect();
+        graph.insert_edge(&sources, &destinations, recipe.clone());
     }
 
     print_tree(&dep_tree(&graph, &args.widget, Rational64::approximate_float(args.rate).unwrap()));

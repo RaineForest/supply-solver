@@ -1,245 +1,276 @@
-iron-ore:
-  recipes:
-    - name: "Iron Ore"
-      builder: "Miner Mk. 1 (Normal)"
-      duration: 1
-      quantity: 1
-      reagents: []
+widgets:
+  - iron-ore
+  - water
+  - copper-ore
+  - coal
+  - iron-ingot
+  - iron-rod
+  - screw
+  - iron-plate
+  - reinforced-iron-plate
+  - copper-ingot
+  - wire
+  - cable
+  - copper-sheet
+  - rotor
+  - smart-plating
+  - steel-ingot
+  - steel-beam
+  - steel-pipe
+  - modular-frame
+  - versatile-framework
+  - stator
+  - automated-wiring
 
-water:
-  recipes:
-    - name: "Water"
-      builder: "Water Extractor"
-      duration: 1
-      quantity: 2
-      reagents: []
+recipes:
+  - name: "Iron Ore"
+    builder: "Miner Mk. 1 (Normal)"
+    duration: 1
+    reagents: []
+    products:
+      - widget: iron-ore
+        quantity: 1
 
-copper-ore:
-  recipes:
-    - name: "Copper Ore"
-      builder: "Miner Mk. 1 (Normal)"
-      duration: 1
-      quantity: 1
-      reagents: []
+  - name: "Water"
+    builder: "Water Extractor"
+    duration: 1
+    reagents: []
+    products:
+      - widget: water
+        quantity: 2
 
-coal:
-  recipes:
-    - name: "Coal"
-      builder: "Miner Mk. 1 (Normal)"
-      duration: 1
-      quantity: 1
-      reagents: []
+  - name: "Copper Ore"
+    builder: "Miner Mk. 1 (Normal)"
+    duration: 1
+    reagents: []
+    products:
+      - widget: copper-ore
+        quantity: 1
 
-iron-ingot:
-  recipes:
-    - name: "Iron Ingot"
-      builder: "Smelter"
-      duration: 2.0
-      quantity: 1
-      reagents:
-        - widget: iron-ore
-          quantity: 1
-    - name: "Pure Iron Ingot"
-      builder: "Refinery"
-      duration: 12.0
-      quantity: 13
-      reagents:
-        - widget: iron-ore
-          quantity: 7
-        - widget: water
-          quantity: 4
-    - name: "Iron Alloy Ingot"
-      builder: "Foundry"
-      duration: 6.0
-      quantity: 5
-      reagents:
-        - widget: iron-ore
-          quantity: 2
-        - widget: copper-ore
-          quantity: 2
+  - name: "Coal"
+    builder: "Miner Mk. 1 (Normal)"
+    duration: 1
+    reagents: []
+    products:
+      - widget: coal
+        quantity: 1
 
-iron-rod:
-  recipes:
-    - name: "Iron Rod"
-      builder: "Constructor"
-      duration: 4.0
-      quantity: 1
-      reagents:
-        - widget: iron-ingot
-          quantity: 1
+  - name: "Iron Ingot"
+    builder: "Smelter"
+    duration: 2.0
+    reagents:
+      - widget: iron-ore
+        quantity: 1
+    products:
+      - widget: iron-ingot
+        quantity: 1
 
-screw:
-  recipes:
-    - name: "Screw"
-      builder: "Constructor"
-      duration: 6.0
-      quantity: 4
-      reagents:
-        - widget: iron-rod
-          quantity: 1
+  - name: "Pure Iron Ingot"
+    builder: "Refinery"
+    duration: 12.0
+    reagents:
+      - widget: iron-ore
+        quantity: 7
+      - widget: water
+        quantity: 4
+    products:
+      - widget: iron-ingot
+        quantity: 13
 
-iron-plate:
-  recipes:
-    - name: "Iron Plate"
-      builder: "Constructor"
-      duration: 6.0
-      quantity: 2
-      reagents:
-        - widget: iron-ingot
-          quantity: 3
+  - name: "Iron Alloy Ingot"
+    builder: "Foundry"
+    duration: 6.0
+    reagents:
+      - widget: iron-ore
+        quantity: 2
+      - widget: copper-ore
+        quantity: 2
+    products:
+      - widget: iron-ingot
+        quantity: 5
 
-reinforced-iron-plate:
-  recipes:
-    - name: "Reinforced Iron Plate"
-      builder: "Assembler"
-      duration: 12.0
-      quantity: 1
-      reagents:
-        - widget: iron-plate
-          quantity: 6
-        - widget: screw
-          quantity: 12
+  - name: "Iron Rod"
+    builder: "Constructor"
+    duration: 4.0
+    reagents:
+      - widget: iron-ingot
+        quantity: 1
+    products:
+      - widget: iron-rod
+        quantity: 1
 
-copper-ingot:
-  recipes:
-    - name: "Copper Ingot"
-      builder: "Smelter"
-      duration: 2.0
-      quantity: 1
-      reagents:
-        - widget: copper-ore
-          quantity: 1
+  - name: "Screw"
+    builder: "Constructor"
+    duration: 6.0
+    reagents:
+      - widget: iron-rod
+        quantity: 1
+    products:
+      - widget: screw
+        quantity: 4
 
-wire:
-  recipes:
-    - name: "Wire"
-      builder: "Constructor"
-      duration: 4.0
-      quantity: 2
-      reagents:
-        - widget: copper-ingot
-          quantity: 1
+  - name: "Iron Plate"
+    builder: "Constructor"
+    duration: 6.0
+    reagents:
+      - widget: iron-ingot
+        quantity: 3
+    products:
+      - widget: iron-plate
+        quantity: 2
 
-cable:
-  recipes:
-    - name: "Cable"
-      builder: "Constructor"
-      duration: 2.0
-      quantity: 1
-      reagents:
-        - widget: wire
-          quantity: 2
+  - name: "Reinforced Iron Plate"
+    builder: "Assembler"
+    duration: 12.0
+    reagents:
+      - widget: iron-plate
+        quantity: 6
+      - widget: screw
+        quantity: 12
+    products:
+      - widget: reinforced-iron-plate
+        quantity: 1
 
-copper-sheet:
-  recipes:
-    - name: "Copper Sheet"
-      builder: "Constructor"
-      duration: 6.0
-      quantity: 1
-      reagents:
-        - widget: copper-ingot
-          quantity: 2
+  - name: "Copper Ingot"
+    builder: "Smelter"
+    duration: 2.0
+    reagents:
+      - widget: copper-ore
+        quantity: 1
+    products:
+      - widget: copper-ingot
+        quantity: 1
 
-rotor:
-  recipes:
-    - name: "Rotor"
-      builder: "Assembler"
-      duration: 15.0
-      quantity: 1
-      reagents:
-        - widget: iron-rod
-          quantity: 5
-        - widget: screw
-          quantity: 25
+  - name: "Wire"
+    builder: "Constructor"
+    duration: 4.0
+    reagents:
+      - widget: copper-ingot
+        quantity: 1
+    products:
+      - widget: wire
+        quantity: 2
 
-smart-plating:
-  recipes:
-    - name: "Smart Plating"
-      builder: "Assembler"
-      duration: 30.0
-      quantity: 1
-      reagents:
-        - widget: reinforced-iron-plate
-          quantity: 1
-        - widget: rotor
-          quantity: 1
+  - name: "Cable"
+    builder: "Constructor"
+    duration: 2.0
+    reagents:
+      - widget: wire
+        quantity: 2
+    products:
+      - widget: cable
+        quantity: 1
 
-steel-ingot:
-  recipes:
-    - name: "Steel Ingot"
-      builder: "Foundry"
-      duration: 4.0
-      quantity: 3
-      reagents:
-        - widget: iron-ore
-          quantity: 3
-        - widget: coal
-          quantity: 3
+  - name: "Copper Sheet"
+    builder: "Constructor"
+    duration: 6.0
+    reagents:
+      - widget: copper-ingot
+        quantity: 2
+    products:
+      - widget: copper-sheet
+        quantity: 1
 
-steel-beam:
-  recipes:
-    - name: "Steel Beam"
-      builder: "Constructor"
-      duration: 4.0
-      quantity: 1
-      reagents:
-        - widget: steel-ingot
-          quantity: 4
+  - name: "Rotor"
+    builder: "Assembler"
+    duration: 15.0
+    reagents:
+      - widget: iron-rod
+        quantity: 5
+      - widget: screw
+        quantity: 25
+    products:
+      - widget: rotor
+        quantity: 1
 
-steel-pipe:
-  recipes:
-    - name: "Steel Pipe"
-      builder:  "Constructor"
-      duration: 6.0
-      quantity: 2
-      reagents:
-        - widget: steel-ingot
-          quantity: 3
+  - name: "Smart Plating"
+    builder: "Assembler"
+    duration: 30.0
+    reagents:
+      - widget: reinforced-iron-plate
+        quantity: 1
+      - widget: rotor
+        quantity: 1
+    products:
+      - widget: smart-plating
+        quantity: 1
 
-modular-frame:
-  recipes:
-    - name: "Modular Frame"
-      builder: "Assembler"
-      duration: 60.0
-      quantity: 2
-      reagents:
-        - widget: reinforced-iron-plate
-          quantity: 3
-        - widget: iron-rod
-          quantity: 12
+  - name: "Steel Ingot"
+    builder: "Foundry"
+    duration: 4.0
+    reagents:
+      - widget: iron-ore
+        quantity: 3
+      - widget: coal
+        quantity: 3
+    products:
+      - widget: steel-ingot
+        quantity: 3
 
-versatile-framework:
-  recipes:
-    - name: "Versatile Framework"
-      builder: "Assembler"
-      duration: 24.0
-      quantity: 2
-      reagents:
-        - widget: modular-frame
-          quantity: 1
-        - widget: steel-beam
-          quantity: 12
+  - name: "Steel Beam"
+    builder: "Constructor"
+    duration: 4.0
+    reagents:
+      - widget: steel-ingot
+        quantity: 4
+    products:
+      - widget: steel-beam
+        quantity: 1
 
-stator:
-  recipes:
-    - name: "Stator"
-      builder: "Assembler"
-      duration: 12.0
-      quantity: 1
-      reagents:
-        - widget: steel-pipe
-          quantity: 3
-        - widget: wire
-          quantity: 8
+  - name: "Steel Pipe"
+    builder:  "Constructor"
+    duration: 6.0
+    reagents:
+      - widget: steel-ingot
+        quantity: 3
+    products:
+      - widget: steel-pipe
+        quantity: 2
 
-automated-wiring:
-  recipes:
-    - name: "Automated Wiring"
-      builder: "Assembler"
-      duration: 24.0
-      quantity: 1
-      reagents:
-        - widget: stator
-          quantity: 1
-        - widget: cable
-          quantity: 20
+  - name: "Modular Frame"
+    builder: "Assembler"
+    duration: 60.0
+    reagents:
+      - widget: reinforced-iron-plate
+        quantity: 3
+      - widget: iron-rod
+        quantity: 12
+    products:
+      - widget: modular-frame
+        quantity: 2
+
+  - name: "Versatile Framework"
+    builder: "Assembler"
+    duration: 24.0
+    reagents:
+      - widget: modular-frame
+        quantity: 1
+      - widget: steel-beam
+        quantity: 12
+    products:
+      - widget: versatile-framework
+        quantity: 2
+
+  - name: "Stator"
+    builder: "Assembler"
+    duration: 12.0
+    reagents:
+      - widget: steel-pipe
+        quantity: 3
+      - widget: wire
+        quantity: 8
+    products:
+      - widget: stator
+        quantity: 1
+
+  - name: "Automated Wiring"
+    builder: "Assembler"
+    duration: 24.0
+    reagents:
+      - widget: stator
+        quantity: 1
+      - widget: cable
+        quantity: 20
+    products:
+      - widget: automated-wiring
+        quantity: 1

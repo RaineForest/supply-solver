@@ -1,0 +1,35 @@
+widgets:
+  - foo
+  - bar
+  - baz
+
+recipes:
+  - name: "Foo"
+    builder: "Foo Maker 2000"
+    duration: 2.0
+    reagents: []
+    products:
+      - widget: foo
+        quantity: 1
+  - name: "Bar"
+    builder: "Bar Press"
+    duration: 1.0
+    reagents:
+      - widget: foo
+        quantity: 1
+    products:
+      - widget: bar
+        quantity: 1
+  - name: "Baz"
+    builder: "Baz Enrichment"
+    duration: 5.0
+    reagents:
+      - widget: bar
+        quantity: 2
+      - widget: foo
+        quantity: 5
+    products:
+      - widget: baz
+        quantity: 1
+      - widget: bar
+        quantity: 1
