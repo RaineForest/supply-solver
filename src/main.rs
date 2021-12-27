@@ -12,13 +12,13 @@ use crate::tree::NTree;
 mod hypergraph;
 use crate::hypergraph::Hypergraph;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 struct Reagent {
     widget: String,
     quantity: u64
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 struct Recipe {
     name: String,
     builder: String,
@@ -45,8 +45,8 @@ struct Widget {
     recipes: Vec<Recipe>
 }
 
-fn least_waste_heuristic(widget: &Widget, rate: Rational64) -> Option<(&Recipe, u64)> {
-    let best_recipe = widget.recipes.iter().min_by(
+fn least_waste_heuristic<'a>(graph: &'a Hypergraph<String, Recipe>, widget: &String, rate: Rational64) -> Option<(&'a Recipe, u64)> {
+    let best_recipe = graph.neighbor_of(widget).unwrap().iter().map(| e | graph.get_weight(e).unwrap()).min_by(
         |recipe, min_rate| -> Ordering {
             let waste = (rate / recipe.rate()).fract();
             let min_waste = (rate / min_rate.rate()).fract();
@@ -61,12 +61,12 @@ fn least_waste_heuristic(widget: &Widget, rate: Rational64) -> Option<(&Recipe, 
     }
 }
 
-fn dep_tree<'a>(map: &'a BTreeMap<String, Widget>, widget: &String, rate: Rational64) -> NTree<(&'a Recipe, u64)> {
-    let recipe = least_waste_heuristic(&map[widget], rate).unwrap();
+fn dep_tree<'a>(graph: &'a Hypergraph<String, Recipe>, widget: &String, rate: Rational64) -> NTree<(&'a Recipe, u64)> {
+    let recipe = least_waste_heuristic(graph, widget, rate).unwrap();
     let mut tree = NTree::new(recipe);
     for reagent in (*tree).0.reagents.iter() {
         let requested_rate = Rational64::from_integer(reagent.quantity as i64 * recipe.1 as i64) / recipe.0.duration;
-        tree.insert(dep_tree(map, &reagent.widget, requested_rate));
+        tree.insert(dep_tree(graph, &reagent.widget, requested_rate));
     }
     tree
 }
@@ -113,6 +113,16 @@ fn main() {
     let file = File::open(args.game_def).unwrap();
     let reader = BufReader::new(file);
     let map: BTreeMap<String, Widget> = serde_yaml::from_reader(reader).unwrap();
+    let mut graph = Hypergraph::<String, Recipe>::new();
+    for widget in map.keys() {
+        graph.insert_node(widget.clone());
+    }
+    for (widget, obj) in map.iter() {
+        for recipe in &obj.recipes {
+            let sources: Vec<String> = recipe.reagents.iter().map(| r | r.widget.clone()).collect();
+            graph.insert_edge(&sources, &vec![widget.clone()], recipe.clone());
+        }
+    }
 
-    print_tree(&dep_tree(&map, &args.widget, Rational64::approximate_float(args.rate).unwrap()));
+    print_tree(&dep_tree(&graph, &args.widget, Rational64::approximate_float(args.rate).unwrap()));
 }

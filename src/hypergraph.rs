@@ -37,13 +37,13 @@ impl Hypernode {
 }
 
 pub struct Hypergraph<N, E>
-where N: Copy + Hash + Eq, E: Hash + Eq {
+where N: Hash + Eq {
     nodes: IndexMap<N, Hypernode>,
     edges: IndexSet<Hyperedge<E>>
 }
 
 impl<N, E> Hypergraph<N, E>
-where N: Copy + Hash + Eq, E: Hash + Eq {
+where N: Hash + Eq {
     pub fn new() -> Self {
         Self { nodes: IndexMap::new(), edges: IndexSet::new() }
     }
