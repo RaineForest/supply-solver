@@ -9,6 +9,9 @@ use structopt::StructOpt;
 mod tree;
 use crate::tree::NTree;
 
+mod hypergraph;
+use crate::hypergraph::Hypergraph;
+
 #[derive(Debug, Deserialize)]
 struct Reagent {
     widget: String,

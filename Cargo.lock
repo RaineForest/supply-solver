@@ -291,6 +291,7 @@ dependencies = [
 name = "supply-solver"
 version = "0.1.0"
 dependencies = [
+ "indexmap",
  "num",
  "serde",
  "serde_yaml",
